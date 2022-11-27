@@ -12,21 +12,24 @@ switch ($block->alignment()) {
     $alignmentClass = "left-align";
 }
 
-?>
+switch ($block->buttonType()) {
+  case "page":
+    $link = $block->page()->isNotEmpty() ? $block->page()->toPage()->url() : '';
+    break;
+  case "link":
+    $link = $block->target()->isNotEmpty() ? $block->target()->toUrl() : '';
+    break;
+  case "file":
+    $link = $block->downloadTarget()->isNotEmpty() ? $block->downloadTarget()->toFile()->url() : '';
+    break;
+  default:
+    $link = '';
+}
 
-<div class="k-block-type-link-button">
-  <div class="button-container <?= $alignmentClass ?>">
-    <a class="button-link<?= $block->fullWidth()->toBool() ? ' full-width' : '' ?><?= $block->iconAlignment() == "right" ? ' reverse' : '' ?>" href="<?= $block->targetIsDownload()->toBool() ? $block->downloadTarget()->toFile()->url() : $block->target()->toUrl()  ?>" <?= $block->targetIsDownload()->toBool() ? ' download' : '' ?>>
-      <?php if ($block->icon()->isNotEmpty()) : ?>
-        <div class="button-icon">
-          <?= $block->icon() ?>
-        </div>
-      <?php endif ?>
-      <?php if ($block->caption()->isNotEmpty()) : ?>
-        <div class="button-content">
-          <?= $block->caption()->html() ?>
-        </div>
-      <?php endif ?>
-    </a>
-  </div>
-</div>
+$text = $block->caption()->toHtml();
+$tag = $block->tag() == 'inline' ? 'tag:span' : '';
+$after = $block->iconAlignment() == 'right' ? ' after: y' : ' ';
+
+$kirbyText = '(icon:' . $block->icon() . ' class: btn center text:' . $text . ' link:' . $link . ' ' . $tag . $after . ')'
+?>
+<?= kt($kirbyText) ?>
