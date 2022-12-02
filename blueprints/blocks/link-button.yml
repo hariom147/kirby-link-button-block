@@ -67,7 +67,7 @@ fields:
     label: Größe
     default: block
     options:
-      block: Groß
-      inline: klein
+      block: groß (block)
+      inline: klein (inline)
     width: 1/2
-    help: "**Bei mehreren:** groß = untereinander | klein = nebeneinander"
+    help: "**Bei mehreren buttons:**<br>*groß* = untereinander | *klein* = nebeneinander"
