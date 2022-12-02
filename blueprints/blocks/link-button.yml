@@ -29,6 +29,7 @@ fields:
   caption:
     required: true
     label: Text
+    default: Text
     type: text
     width: 1/2
     help: Text des Button
